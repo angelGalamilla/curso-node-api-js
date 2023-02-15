@@ -1,0 +1,23 @@
+const mongoose = require("mongoose")
+const mongooseDelete = require("mongoose-delete")
+const StorageScheme = new mongoose.Schema(
+  {
+    url: {
+      type:String
+    },
+    filename:{
+      type:String
+    },
+    role:{
+      type: ["user", "admin"],
+      default: "user",
+    },
+  },
+  {
+    timestamps:true, //TODO createdAt
+    versionKey: false
+  }
+);
+
+StorageScheme.plugin(mongooseDelete, {overrideMethods:'all'})
+module.exports = mongoose.model("storage", StorageScheme)
